@@ -674,8 +674,18 @@ footer {
         font-size: 2rem;
     }
 
+    .photo-frame {
+        max-width: 360px;
+    }
+
     .photo-container {
-        height: 300px;
+        height: auto;
+        aspect-ratio: 3 / 4;
+        padding: 10px;
+    }
+
+    .birthday-photo {
+        object-fit: contain;
     }
 
     .party-info {
@@ -721,6 +731,14 @@ footer {
 
     .big-number {
         font-size: 4rem;
+    }
+
+    .photo-frame {
+        max-width: 320px;
+    }
+
+    .photo-container {
+        aspect-ratio: 4 / 5;
     }
 
     .info-card {
