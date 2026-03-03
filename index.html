@@ -12,7 +12,16 @@
 <body>
     <div class="stars-background"></div>
     
-    <div class="container">
+    <section class="poster-page" id="posterPage">
+        <div class="poster-card">
+            <p class="poster-tag">Birthday Invitation</p>
+            <img src="photo1.jpeg" alt="Ryden Birthday Poster" class="hero-poster">
+            <p class="poster-subtitle">A special celebration for Ryden's first birthday</p>
+            <button class="accept-button" id="acceptButton" onclick="openWelcomePage()">Accept Invitation</button>
+        </div>
+    </section>
+    
+    <div class="container welcome-page" id="welcomePage" aria-hidden="true">
         <!-- Decorative Stitch elements -->
         <div class="stitch-ear left-ear"></div>
         <div class="stitch-ear right-ear"></div>
@@ -123,7 +132,7 @@
         <div class="floating-stitch stitch-8 stitch-character">💙</div>
     </div>
 
-    <footer>
+    <footer class="welcome-page" id="welcomeFooter" aria-hidden="true">
         <p>Can't wait to celebrate with you! 💙</p>
     </footer>
 

@@ -4,14 +4,34 @@ let autoScrollInterval;
 let totalSlides = 0;
 let photosLoaded = 0;
 
+function openWelcomePage() {
+    const posterPage = document.getElementById('posterPage');
+    const welcomePage = document.getElementById('welcomePage');
+    const welcomeFooter = document.getElementById('welcomeFooter');
+
+    if (posterPage) {
+        posterPage.classList.add('hidden');
+    }
+
+    if (welcomePage) {
+        welcomePage.classList.add('active');
+        welcomePage.setAttribute('aria-hidden', 'false');
+    }
+
+    if (welcomeFooter) {
+        welcomeFooter.classList.add('active');
+        welcomeFooter.setAttribute('aria-hidden', 'false');
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    initializeCarousel();
+}
+
 function getSlides() {
     return Array.from(document.querySelectorAll('.carousel-slide'));
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize carousel
-    initializeCarousel();
-    
     // Add sparkle effect on mouse move
     document.addEventListener('mousemove', createSparkle);
     
@@ -345,6 +365,10 @@ document.querySelectorAll('.floating-stitch').forEach(stitch => {
 const container = document.querySelector('.birthday-details');
 if (container) {
     container.addEventListener('mousemove', function(e) {
+        if (!document.getElementById('welcomePage')?.classList.contains('active')) {
+            return;
+        }
+
         const rect = this.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
