@@ -275,7 +275,7 @@ function handleRSVP() {
     // Example: Open email client
     const email = 'eddiechin0305@gmail.com';
     const subject = encodeURIComponent("RSVP for Ryden's 1st Birthday 🎉");
-    const body = encodeURIComponent("Hi! I'd love to attend Ryden's birthday party!\n\nName: \nNumber of Guests: \nAny dietary restrictions: \n\nLooking forward to celebrating!");
+    const body = encodeURIComponent("Hi! I'd love to attend Ryden's birthday party!\n\nName: \nNumber of Guests: \n\nLooking forward to celebrating!");
     
     setTimeout(() => {
         window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
