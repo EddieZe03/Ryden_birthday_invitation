@@ -36,11 +36,11 @@ body {
 }
 
 .poster-card {
-    width: min(860px, 96vw);
+    width: min(920px, 97vw);
     background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(14px);
     border-radius: 34px;
-    padding: 24px;
+    padding: 16px;
     box-shadow:
         0 25px 60px rgba(0, 0, 0, 0.3),
         0 0 45px rgba(139, 198, 236, 0.35);
@@ -49,29 +49,13 @@ body {
     animation: posterFadeIn 0.8s ease both;
 }
 
-.poster-tag {
-    font-family: 'Anton', 'Fredoka', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 2.1rem;
-    color: var(--stitch-dark-blue);
-    margin-bottom: 14px;
-}
-
 .hero-poster {
     width: 100%;
-    max-height: 70vh;
+    max-height: 82vh;
     object-fit: contain;
     border-radius: 22px;
     background: #f2f4fb;
     box-shadow: 0 16px 38px rgba(0, 0, 0, 0.2);
-}
-
-.poster-subtitle {
-    font-size: 1.2rem;
-    color: #3c4a61;
-    margin: 18px 0 20px;
-    font-weight: 500;
 }
 
 .accept-button {
@@ -90,6 +74,7 @@ body {
         0 12px 30px rgba(255, 107, 107, 0.45),
         0 0 24px rgba(255, 105, 180, 0.28);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
+    margin-top: 14px;
 }
 
 .accept-button:hover {
@@ -772,16 +757,8 @@ footer {
 /* Responsive Design */
 @media (max-width: 768px) {
     .poster-card {
-        padding: 16px;
+        padding: 12px;
         border-radius: 24px;
-    }
-
-    .poster-tag {
-        font-size: 1.55rem;
-    }
-
-    .poster-subtitle {
-        font-size: 1.02rem;
     }
 
     .accept-button {
@@ -858,12 +835,8 @@ footer {
         padding: 20px 12px;
     }
 
-    .poster-tag {
-        font-size: 1.3rem;
-    }
-
     .hero-poster {
-        max-height: 62vh;
+        max-height: 76vh;
     }
 
     .container {
