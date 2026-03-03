@@ -672,6 +672,19 @@ footer {
         height: 300px;
     }
 
+    .carousel-slide {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f3f4f8;
+    }
+
+    .birthday-photo {
+        object-fit: contain;
+        object-position: center;
+        background: #f3f4f8;
+    }
+
     .party-info {
         grid-template-columns: 1fr;
     }
