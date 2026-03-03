@@ -4,6 +4,10 @@ let autoScrollInterval;
 let totalSlides = 0;
 let photosLoaded = 0;
 
+function getSlides() {
+    return Array.from(document.querySelectorAll('.carousel-slide'));
+}
+
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize carousel
     initializeCarousel();
@@ -19,11 +23,22 @@ document.addEventListener('DOMContentLoaded', function() {
 function initializeCarousel() {
     const track = document.getElementById('carouselTrack');
     const dotsContainer = document.getElementById('carouselDots');
-    const slides = document.querySelectorAll('.carousel-slide');
+    const slides = getSlides();
     const placeholder = document.getElementById('photoPlaceholder');
+    let processedPhotos = 0;
     
+    clearInterval(autoScrollInterval);
+    currentSlide = 0;
     photosLoaded = 0;
     totalSlides = slides.length;
+
+    if (track) {
+        track.style.transform = 'translateX(0)';
+    }
+
+    if (dotsContainer) {
+        dotsContainer.innerHTML = '';
+    }
 
     if (placeholder) {
         placeholder.classList.remove('show');
@@ -37,8 +52,31 @@ function initializeCarousel() {
     };
 
     const handleError = (slide) => {
-        slide.style.display = 'none';
-        totalSlides--;
+        slide.remove();
+    };
+
+    const finishInitialization = () => {
+        totalSlides = getSlides().length;
+
+        if (totalSlides === 0 && placeholder) {
+            placeholder.classList.add('show');
+            return;
+        }
+
+        if (placeholder) {
+            placeholder.classList.remove('show');
+        }
+
+        createDots();
+        goToSlide(0);
+        startAutoScroll();
+    };
+
+    const onImageProcessed = () => {
+        processedPhotos++;
+        if (processedPhotos === slides.length) {
+            finishInitialization();
+        }
     };
     
     // Check each photo
@@ -51,33 +89,36 @@ function initializeCarousel() {
             } else {
                 handleError(slide);
             }
+            onImageProcessed();
             return;
         }
 
-        img.addEventListener('load', handleLoaded);
+        img.addEventListener('load', function() {
+            handleLoaded();
+            onImageProcessed();
+        }, { once: true });
 
         img.addEventListener('error', function() {
             handleError(slide);
-        });
+            onImageProcessed();
+        }, { once: true });
     });
-    
-    // Show placeholder if no photos load
-    setTimeout(() => {
-        if (photosLoaded === 0 && placeholder) {
-            placeholder.classList.add('show');
-        } else {
-            // Create navigation dots
-            createDots();
-            // Start auto-scroll
-            startAutoScroll();
-        }
-    }, 1000);
+
+    if (slides.length === 0) {
+        finishInitialization();
+    }
 }
 
 // Create navigation dots
 function createDots() {
     const dotsContainer = document.getElementById('carouselDots');
-    const slides = document.querySelectorAll('.carousel-slide');
+    const slides = getSlides();
+
+    if (!dotsContainer) {
+        return;
+    }
+
+    dotsContainer.innerHTML = '';
     
     slides.forEach((_, index) => {
         const dot = document.createElement('div');
@@ -92,12 +133,18 @@ function createDots() {
 function goToSlide(index) {
     const track = document.getElementById('carouselTrack');
     const dots = document.querySelectorAll('.carousel-dot');
-    const slides = document.querySelectorAll('.carousel-slide');
+    const slides = getSlides();
+
+    if (!track || slides.length === 0) {
+        return;
+    }
+
+    totalSlides = slides.length;
     
-    if (index >= slides.length) {
+    if (index >= totalSlides) {
         currentSlide = 0;
     } else if (index < 0) {
-        currentSlide = slides.length - 1;
+        currentSlide = totalSlides - 1;
     } else {
         currentSlide = index;
     }
@@ -112,6 +159,12 @@ function goToSlide(index) {
 
 // Start automatic scrolling
 function startAutoScroll() {
+    clearInterval(autoScrollInterval);
+
+    if (totalSlides <= 1) {
+        return;
+    }
+
     autoScrollInterval = setInterval(() => {
         goToSlide(currentSlide + 1);
     }, 3500); // Change photo every 3.5 seconds
@@ -120,20 +173,26 @@ function startAutoScroll() {
 // Stop auto-scroll when user interacts
 function stopAutoScroll() {
     clearInterval(autoScrollInterval);
-    // Restart after 10 seconds of no interaction
-    setTimeout(startAutoScroll, 10000);
 }
 
 // Pause auto-scroll on hover
 const photoContainer = document.querySelector('.photo-container');
 if (photoContainer) {
     photoContainer.addEventListener('mouseenter', () => {
-        clearInterval(autoScrollInterval);
+        stopAutoScroll();
     });
     
     photoContainer.addEventListener('mouseleave', () => {
         startAutoScroll();
     });
+
+    photoContainer.addEventListener('touchstart', () => {
+        stopAutoScroll();
+    }, { passive: true });
+
+    photoContainer.addEventListener('touchend', () => {
+        startAutoScroll();
+    }, { passive: true });
 }
 
 // Create sparkle effect
