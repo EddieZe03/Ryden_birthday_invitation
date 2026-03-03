@@ -214,7 +214,7 @@ function handleRSVP() {
     // 4. Open WhatsApp/SMS
     
     // Example: Open email client
-    const email = 'your-email@example.com'; // Replace with your email
+    const email = 'eddiechin0305@gmail.com';
     const subject = encodeURIComponent("RSVP for Ryden's 1st Birthday 🎉");
     const body = encodeURIComponent("Hi! I'd love to attend Ryden's birthday party!\n\nName: \nNumber of Guests: \nAny dietary restrictions: \n\nLooking forward to celebrating!");
     
